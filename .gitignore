@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#virtual environments
+*venv
+*.csv
+*.DS_Store
