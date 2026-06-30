@@ -14,40 +14,43 @@ greet = """
              ╚═════╝╚═╝╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
 """
 
-alphabets = [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-    'u', 'v', 'w', 'x', 'y', 'z'
-]
+lowercase = list("abcdefghijklmnopqrstuvwxyz")
+uppercase = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 
 def encrypt(msg: str, diff: int):
-    encryption = []
+    encrypted_msg = ""
 
     for letter in msg:
-        if letter in alphabets:
-            index = alphabets.index(letter)
-            new_index = (index + diff) % len(alphabets)  # Wrap around
-            encryption.append(alphabets[new_index])
+        if letter in lowercase:
+            shift = lowercase.index(letter) + diff
+            shift %= len(lowercase)
+            encrypted_msg += lowercase[shift]
+
+        elif letter in uppercase:
+            shift = uppercase.index(letter) + diff
+            shift %= len(uppercase)
+            encrypted_msg += uppercase[shift]
+
         else:
-            encryption.append(letter)  # Keep spaces/punctuation unchanged
+            encrypted_msg += letter
 
-    return "".join(encryption)
-            
-
-def decrypt(msg, diff):
-    decryption = []
+def decrypt(msg: str, diff: int):
+    encrypted_msg = ""
 
     for letter in msg:
-        if letter in alphabets:
-            index = alphabets.index(letter)
-            new_index = (index - diff) % len(alphabets)  # Wrap around
-            decryption.append(alphabets[new_index])
+        if letter in lowercase:
+            shift = lowercase.index(letter) - diff
+            shift %= len(lowercase)
+            encrypted_msg += lowercase[shift]
+
+        elif letter in uppercase:
+            shift = uppercase.index(letter) - diff
+            shift %= len(uppercase)
+            encrypted_msg += uppercase[shift]
+
         else:
-            decryption.append(letter)  # Keep spaces/punctuation unchanged
-
-    return "".join(decryption)
-
+            encrypted_msg += letter
 
 
 mode = input(f"{greet}\n\nType 'encrypt' or 'decrypt': ").lower().strip()
